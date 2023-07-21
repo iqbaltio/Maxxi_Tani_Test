@@ -7,6 +7,7 @@ class Pegawai(BaseModel):
     email: str
     nomor_hp: str
     alamat: str
+    id_divisi: int
 
 #Model untuk divisi
 class Divisi(BaseModel):
@@ -20,13 +21,15 @@ class Config:
             "nama": "Example Man",
             "email": "man@gmail.com",
             "nomor_hp": "081417409999",
-            "alamat": "Jalan Malang"
+            "alamat": "Jalan Malang",
+            "id_divisi": 0
         }
     }
 
 class ConfigDivisi:
     schema_extra = {
-        "example": {
+        "example": {      
+            "id_divisi": 0,
             "nama_divisi": "Example"
         }
     }

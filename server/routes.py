@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from server.model import Pegawai, Divisi
 
@@ -11,14 +11,16 @@ data_pegawai = {
         "nama": "Iqbal Tio",
         "email": "iqbal@gmail.com",
         "nomor_hp": "081217409999",
-        "alamat": "Jalan Kali Urang"
+        "alamat": "Jalan Kali Urang",
+        "id_divisi": 1
     },
     "2": {
         "nomor_pegawai": 2,
         "nama": "Example Man 2",
         "email": "man2@gmail.com",
         "nomor_hp": "081415409999",
-        "alamat": "Jalan Malang Utara"
+        "alamat": "Jalan Malang Utara",
+        "id_divisi": 1
     }
 }
 
@@ -50,6 +52,20 @@ async def get_pegawai(id: str) -> dict:
     return {
         "data": data_pegawai[id]
     }
+
+@router.get("/pegawai/divisi/{id_divisi}")
+async def get_divisi_pegawai(id_divisi: int):
+    pegawai_divisi = [pegawai for pegawai in data_pegawai.values() if pegawai["id_divisi"] == id_divisi]
+    
+    if not pegawai_divisi:
+        return {
+            "error": "Invalid Divisi ID"
+        }
+    
+    return {
+        "data": pegawai_divisi
+    }
+
 
 @router.post("/pegawai")
 async def add_pegawai(pegawai: Pegawai = Body(...)) -> dict():
